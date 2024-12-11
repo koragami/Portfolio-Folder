@@ -15,8 +15,8 @@ document.addEventListener("DOMContentLoaded", function() {
     let voiceSpeech = false; // Initialize the voiceSpeech variable
 
     const introductionQuestion = [
-        { message: "\nWelcome to my Portfolio!\n", delay: 1500 },
-        { message: "\nWould you like AI Narrative Assistance?\n", delay: 1500 }
+        { message: "\nBefore we get into the portfolio.\n", delay: 1500 },
+        { message: "\nWould you like AI Narrative Voice Assistance? (yes, no)\n", delay: 1500 }
     ];
 
     const fakeLoadingModules = [
@@ -116,11 +116,40 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
+    let inactivityTimeout;
+    const inactivityDuration = 30000;
+    const resetInactivityTimer = () => {
+        clearTimeout(inactivityTimeout);
+        inactivityTimeout = setTimeout(handleInactivity, inactivityDuration);     
+    };
+
+    const handleInactivity = () => {
+        simulateTyping("Due to inactivity, you have been disconnected.\n", 50, () => {
+            userInput.readOnly = true;
+        });
+    };
+
+    const detectActivity = () => {
+        if (userInput.readOnly) {
+            output.innerHTML += "\nActivity detected, reconnected.\n";
+            setTimeout(() => {
+                
+            }
+        }
+    }
     // Start by displaying the introduction questions and then fake loading modules if applicable
     (async () => {
         await displayIntroductionQuestions(introductionQuestion);
     })();
 
+
+    const preCodedMessages = [
+        { message: "Welcome to my Portfolio!/n My name is Dylon LaMarre./n I started programming in 2021-2022./n I eventually took a break for a little, and returned cause of my love, and passion, for programming!.", delay: 100},
+        { message: "/n This portfolio is only a brief summary of the things I can do.", delay: 500 },
+        { message: '/n"SKILLS"/n', delay: 50},
+        { message: '/nCertified Front-End Developer & High School Diploma with Eligibility to work in the US.'},
+        { message: '/n Certified in: HTML | CSS | Javascript | React | Chrome | git | github | SQL/n'}
+    ];
 });
 
 

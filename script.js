@@ -1,24 +1,30 @@
-document.addEventListener('DOMContentLoaded', (event) => {
-    setTimeout(() => {
-        const loadingScreen = document.querySelector('.loading-screen');
-        const mainContent = document.getElementById('main-content');
-        const header = document.querySelector('header')
-        const loadingTextSpans = document.querySelectorAll('#loading-text span');
+document.addEventListener('DOMContentLoaded', function()  {
+    const loadingScreen = document.getElementById('loading-screen');
+    const loadingMessage = document.getElementById('loading-message');
+    const mainContent = document.getElementById('main-content');
 
-        loadingTextSpans.forEach((span, index) => {
-            span.style.animationDelay = `${index * 0.3}s`;
-        });
+    const messages = [
+        "Preparing portfolio...",
+        "Adding some creativity...",
+        "Fetching data from Servers",
+        "Remembering we are in the 20th Century",
+        "Almost there..."
+    ];
 
-        setTimeout(() => {
-            loadingScreen.classList.add('hidden');
+    const displayMessages = (messages, interval) => {
+        let index = 0;
+        const showMessage = () => {
+            if (index < messages.length) {
+                loadingMessage.textContent = messages[index];
+                index++;
+                setTimeout(showMessage, interval);
+            } else {
+                loadingScreen.style.display = 'none';
+                mainContent.style.display = 'block';
+            }
+        };
+        showMessage();
+    };
 
-        setTimeout(() => {
-            loadingScreen.style.display = 'none';
-            mainContent.style.display = 'block';
-            header.style.display = 'block';
-            mainContent.classList.add('visible');
-            header.classList.add('visible');
-        }, 1000);
-    }, 3000);
-}, 2000);
+    displayMessages(messages, 4000);
 });
